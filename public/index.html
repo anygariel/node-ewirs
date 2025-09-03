@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>POTBEE | Socia Blog</title>
+        <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+    </head>
+    <body>
+        <div class="navbar">
+             <h1 class="white-back">Ewirs</h1>
+	     <style>
+		 
+	     </style>
+	     <div class="menus">
+             </div>
+        </div>
+        <div id="data-list">
+        </div>
+<style>
+ #pagination {
+   display:flex;
+   flex-wrap:nowrap;
+   justify-content:space-between;
+   align-items:center;
+   padding:0 15px;
+}
+ #pagination button {
+   padding:10px;
+   color:green;
+   font-weight:bold;
+   border:3px dotted green;
+   font-family: 'Times New Roman';
+   font-size:16px;
+}
+</style>
+<div id="pagination">
+    </div>
+	<div class="green" style="padding:15px;">2025 © Ewirs. All Rights Reserved.</div>
+        <script type="text/javascript" charset="utf-8">
+        // Anda bisa menempatkan variabel ini di luar fungsi agar mudah diakses
+let currentPage = 1;
+const itemsPerPage = 10; // Harus sesuai dengan limit di server
+function cleanTags(tags) {
+    const tagsArray = tags.split(" ");
+    const uniqueTags = [...new Set(tagsArray)];
+    return uniqueTags.join(" ");
+}
+// Fungsi untuk mengambil data dengan paginasi
+async function fetchItems(page) {
+    try {
+        const response = await fetch(`/items?page=${page}&limit=${itemsPerPage}`);
+        const data = await response.json(); // Data sekarang berupa objek { totalItems, items }
+        
+        const items = data.items;
+        const totalItems = data.totalItems;
+	const menusList = document.querySelector('.menus');        
+        const dataList = document.querySelector('#data-list');
+        dataList.innerHTML = '';
+	const uniqueHashtags = new Set();
+	items.forEach(item => {
+            const itemHashtags = item.hashtag.split(" ");
+            itemHashtags.forEach(tag => {
+                if (tag) { // Check for empty tags
+                    uniqueHashtags.add(tag);
+                }
+            });
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('data-item');
+            itemDiv.innerHTML = `
+                <div class="item-page">
+                    <div class="title"><h2>${item.judul}</h2></div>
+                    <div class="description">${item.deskripsi}</div>
+                    <div class="tags">${item.hashtag}</div>
+                    <div class="dates">${item.waktu}</div>
+                    <div class="selengkapnya">
+                        <a href="posts/${item.id}/${item.link}">Lihat Selengkapnya</a>
+                    </div>
+                </div>
+            `;
+            //const menusDiv = document.createElement('div');
+            //menusDiv.classList.add('menus-list');
+            //menusDiv.innerHTML = `<a href="/categories/${item.hashtag}"><button>${cleanedTags}<button></a>`;
+            //menusList.appendChild(menusDiv);
+            dataList.appendChild(itemDiv);
+        });
+	uniqueHashtags.forEach(tag => {
+            const menusDiv = document.createElement('div');
+            menusDiv.classList.add('menus-list');
+            menusDiv.innerHTML = `<a href="/categories/${tag}"><button>${tag}</button></a>`;
+            menusList.appendChild(menusDiv);
+        });
+        // Panggil fungsi untuk membuat tombol paginasi
+        updatePaginationButtons(totalItems);
+
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+}
+
+// Fungsi untuk membuat dan memperbarui tombol paginasi
+function updatePaginationButtons(totalItems) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const paginationContainer = document.querySelector('#pagination');
+    paginationContainer.innerHTML = ''; // Hapus tombol lama
+
+    // Tombol "Previous"
+    const prevButton = document.createElement('button');
+    prevButton.textContent = 'Sebelumnya';
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+        currentPage--;
+        fetchItems(currentPage);
+    });
+    paginationContainer.appendChild(prevButton);
+
+    // Tombol-tombol halaman (opsional)
+    // Anda bisa membuat loop untuk membuat tombol 1, 2, 3, dst. di sini
+    
+    // Tombol "Next"
+    const nextButton = document.createElement('button');
+    nextButton.textContent = 'Selanjutnya';
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+        currentPage++;
+        fetchItems(currentPage);
+    });
+    paginationContainer.appendChild(nextButton);
+}
+
+// Panggil fungsi untuk pertama kali
+fetchItems(currentPage);
+	</script>
+    </body>
+</html>

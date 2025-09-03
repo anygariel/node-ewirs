@@ -1,0 +1,104 @@
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html{
+  line-height:1.4;
+  font-family: 'Times New Roman';
+  font-size:normal;
+  background:#fff;
+  color:yellow !important;
+}
+body{
+  max-width:800px;
+  margin:0 auto;
+  
+}
+a{
+  color: green;
+  font-weight:bold;
+  text-decoration:none;
+}
+.icon-nav{
+  font-size:28px;
+}
+.navbar{
+  background:green;
+  color:#fff;
+  text-align:center;
+/*  box-shadow:0px 2.5px 2.5px rgba(0,0,0,0.2);*/
+  border-bottom:3px dotted #fff;
+
+}
+.navbar h1{
+  margin:10px 0;
+  font-size:22px;
+}
+.yellow{
+  color:green;
+}
+.menus{
+  display:flex;
+  width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  padding:0 5px;
+}
+.menus button{
+  background: green;
+  padding:10px 0;
+  padding-left:5px;
+  padding-right:2.5px;
+  border:none;
+  font-weight:bold;
+  color:#fff;
+  font-family: 'Times New Roman';
+  font-size:14px;
+}
+.small{
+  position:fixed;
+  top:15px;
+  text-align:start !important;
+  right:0px;
+  padding:10px;
+  background:green;
+  color:#fff;
+  font-weight:bold;
+  font-size:7px !important;
+}
+.white-back{
+  padding:10px;
+  background:green;
+  display:inline-block;
+  border-radius:20px;
+   
+}
+#data-list{
+  padding:15px;
+}
+.item-page{
+  color:#000 !important;
+  border-radius:4px;
+  margin-bottom:20px;
+}
+.tags{
+  margin-bottom:10px;
+}
+.dates{
+  margin-bottom:20px;
+}
+.description,.selengkapnya{
+  margin:10px 0;
+}
+.selengkapnya a{
+  padding:10px;
+  background:green;
+  color:#fff !important;
+  font-size:16px !important;
+  border:3px dotted #fff;
+}
+.green{
+  color:green;
+}
